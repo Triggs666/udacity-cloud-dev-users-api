@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+  - 13
+
+services:
+  - docker
+
+# Pre-testing installs
+install:
+  - echo "nothing needs to be installed"
+
+# Scripts to be run such as tests
+before_script:
+  - echo "no tests"
+
+script:
+  - docker --version # print the version for logging
+  - docker build -t feed-api --build-arg POSTGRES_USERNAME=${POSTGRES_USERNAME} --build-arg POSTGRES_PASSWORD=${POSTGRES_PASSWORD} --build-arg POSTGRES_DB=${POSTGRES_DB} --build-arg JWT_SECRET=${JWT_SECRET} .
+  - docker tag feed-api trigs666/feed-api:latest
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push trigs666/feed-api
+
