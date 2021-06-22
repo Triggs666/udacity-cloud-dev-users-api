@@ -15,10 +15,10 @@ before_script:
 
 script:
   - docker --version # print the version for logging
-  - docker build -t feed-api --build-arg POSTGRES_USERNAME=${POSTGRES_USERNAME} --build-arg POSTGRES_PASSWORD=${POSTGRES_PASSWORD} --build-arg POSTGRES_DB=${POSTGRES_DB} --build-arg JWT_SECRET=${JWT_SECRET} .
-  - docker tag feed-api trigs666/feed-api:latest
+  - docker build -t users-api --build-arg POSTGRES_USERNAME=${POSTGRES_USERNAME} --build-arg POSTGRES_PASSWORD=${POSTGRES_PASSWORD} --build-arg POSTGRES_DB=${POSTGRES_DB} --build-arg JWT_SECRET=${JWT_SECRET} .
+  - docker tag users-api trigs666/users-api:latest
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push trigs666/feed-api
+  - docker push trigs666/users-api
 
